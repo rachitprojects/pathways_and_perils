@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;	
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,6 +44,7 @@ public class TileTest extends ApplicationAdapter {
 	private Integer mapHeightInTiles;
 	private int mapWidthInPixels;
 	private int mapHeightInPixels;
+	private TiledMapTileSet char_anim ;
 
     private float x_pos_tune = 0.01f ; 
     private float y_pos_tune = 0.01f ; 
@@ -51,7 +53,7 @@ public class TileTest extends ApplicationAdapter {
     private Box2DDebugRenderer b2dr ; 
 
 //	private Body circbody ;
-	private Texture texture;
+	public static Texture charac_im;
 	private TextureRegion tex_region;
 	private MainCharacter charac; 
 	    
@@ -94,7 +96,7 @@ public class TileTest extends ApplicationAdapter {
         FixtureDef fdef = new FixtureDef() ;
         Body body ; 
         
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
         	Rectangle rect = ((RectangleMapObject) object).getRectangle() ;
         	
         	bdef.type = BodyDef.BodyType.StaticBody ; 
@@ -107,11 +109,11 @@ public class TileTest extends ApplicationAdapter {
         }
         
         
-    	texture = new Texture(Gdx.files.internal("hyptosis_tile-art-batch-1.png")) ; ;
-//    	tex_region = new TextureRegion(texture, 32, 832, 64, 864) ;
-    	tex_region = map.getTileSets().getTileSet(0).getTile(782).getTextureRegion() ; ;
+    	charac_im = new Texture(Gdx.files.internal("MainGuySpriteSheet.png")) ; 
+//    	tex_region = new TextureRegion(texture, 0, 0, 41, 3) ;
+//    	tex_region = map.getTileSets().getTileSet(0).getTile(782).getTextureRegion() ; ;
 
-    		charac = new MainCharacter(this.world, tex_region) ;
+    		charac = new MainCharacter(this.world) ;
 //            
 //        	BodyDef circdef = new BodyDef() ; 
 //        	CircleShape circshape = new CircleShape() ; 
@@ -146,7 +148,7 @@ public class TileTest extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         charac.inputHandle();         
-        charac.update();
+        charac.update(Gdx.graphics.getDeltaTime());
 
         
         world.step(1/60f, 6, 2) ;
