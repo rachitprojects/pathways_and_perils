@@ -7,3 +7,5 @@
                                     Rahul Nayak
                                     Vaishakh Dileep
                                     Dinesh Kumar
+
+Status Update : Enemies now capable of moving around. Created methods to add enemies to map. Enemy animations to be placed in the right place. 
