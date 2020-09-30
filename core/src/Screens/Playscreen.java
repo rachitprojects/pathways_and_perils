@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -30,6 +31,7 @@ import com.kingsman.dungeon.Dungeon;
 
 import Tools.B2WorldCreator;
 import alive.Enemy;
+import alive.EnemyManager;
 
 public class Playscreen implements Screen {
 	private Dungeon game;
@@ -52,12 +54,15 @@ public class Playscreen implements Screen {
 	private AssetManager manager;
 	private SpriteBatch batch;
 	private Enemy enem;
+	private EnemyManager enMan;
 	
 	
 
 	public Playscreen(Dungeon game) {
 		this.game = game ;
-		gamecam = new OrthographicCamera(300, 300);
+//		gamecam = new OrthographicCamera(300, 300);
+		gamecam = new OrthographicCamera(3000, 3000);
+
 		//gamePort = new FitViewport(800, 400, gamecam);
 //		maploader = new TmxMapLoader();
 //		map = maploader.load("Dungeon.tmx");
@@ -86,11 +91,15 @@ public class Playscreen implements Screen {
 		new B2WorldCreator(world , map);
 		
 		//gamecam.position.set(gamePort.getWorldWidth() / 2 ,gamePort.getWorldHeight() / 2, 0);\
-		gamecam.position.set(0, 0, 0);
+		gamecam.position.set(3412, 5798, 0);
 		
 		batch = new SpriteBatch() ;
-		enem = new Enemy(world) ;
-		}
+//		enem = new Enemy(world, 448f, 3670f, 1) ;
+		enMan = new EnemyManager() ; 
+		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
+		
+	}
 
 	 
 	@Override
@@ -107,9 +116,11 @@ public class Playscreen implements Screen {
 			 }else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			          gamecam.position.y += 1000 * dt ;
 			 }else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-			          gamecam.position.y -= 1000 * dt ;}
-		     System.out.println(gamecam.position.x) ;
-		     System.out.println(gamecam.position.y) ;
+			          gamecam.position.y -= 1000 * dt ;
+			 }
+			
+//		     System.out.print("x is " + gamecam.position.x + ",") ;
+//		     System.out.println("y is " + gamecam.position.y) ;
 
 	}
 	
@@ -124,42 +135,36 @@ public class Playscreen implements Screen {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		update(delta);
+        world.step(1/60f, 6, 2) ;
 		renderer.render();
 		b2dr.render(world, gamecam.combined );
 		game.batch.setProjectionMatrix(gamecam.combined);
 		
-//        batch.setProjectionMatrix(gamecam.combined) ;
-//        batch.begin() ;
+        batch.setProjectionMatrix(gamecam.combined) ;
+        
+        enMan.updateEnemy(delta);
+//        Currently drawing every enemy, however in the future optimize this to only draw enemies which are not in the screen
+        batch.begin() ;
 //        enem.draw(batch);
-//        batch.end() ;
-
-		
-		// TODO Auto-generated method stub
-		
+        enMan.drawEnemy(batch) ;
+        batch.end() ;
 	}
 
 	@Override
 	public void resize(int width, int height) {
        // gamePort.update(width, height);
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
+	public void hide() {		
 	}
 
 	@Override
