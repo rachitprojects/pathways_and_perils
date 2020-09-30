@@ -3,9 +3,11 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -27,12 +29,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kingsman.dungeon.Dungeon;
 
 import Tools.B2WorldCreator;
+import alive.Enemy;
 
 public class Playscreen implements Screen {
 	private Dungeon game;
 	Texture texture;
 	private OrthographicCamera gamecam;
-	private Viewport gamePort;
+//	private Viewport gamePort;
 	
 	private TmxMapLoader maploader;
 	private TiledMap map;
@@ -46,25 +49,37 @@ public class Playscreen implements Screen {
 	
 	private World world;
 	private Box2DDebugRenderer b2dr;
+	private AssetManager manager;
+	private SpriteBatch batch;
+	private Enemy enem;
 	
 	
 
 	public Playscreen(Dungeon game) {
 		this.game = game ;
-		gamecam = new OrthographicCamera(600f , 600f);
+		gamecam = new OrthographicCamera(300, 300);
 		//gamePort = new FitViewport(800, 400, gamecam);
-		maploader = new TmxMapLoader();
-		map = maploader.load("Dungeon.tmx");
-		MapProperties properties = map.getProperties();
-        tileWidth         = properties.get("tilewidth", Integer.class);
-        tileHeight        = properties.get("tileheight", Integer.class);
-        mapWidthInTiles   = properties.get("width", Integer.class);
-        mapHeightInTiles  = properties.get("height", Integer.class);
-        mapWidthInPixels  = mapWidthInTiles  * tileWidth;
-        mapHeightInPixels = mapHeightInTiles * tileHeight;
+//		maploader = new TmxMapLoader();
+//		map = maploader.load("Dungeon.tmx");
+//		MapProperties properties = map.getProperties();
+//        tileWidth         = properties.get("tilewidth", Integer.class);
+//        tileHeight        = properties.get("tileheight", Integer.class);
+//        mapWidthInTiles   = properties.get("width", Integer.class);
+//        mapHeightInTiles  = properties.get("height", Integer.class);
+//        mapWidthInPixels  = mapWidthInTiles  * tileWidth;
+//        mapHeightInPixels = mapHeightInTiles * tileHeight;
+		
+      manager = new AssetManager();
+      manager.setLoader(TiledMap.class, new TmxMapLoader());
+      manager.load("Dungeon.tmx", TiledMap.class);
+      manager.finishLoading();
+
+      map = manager.get("Dungeon.tmx", TiledMap.class);
+
+		
 		renderer = new OrthogonalTiledMapRenderer(map);
-		gamecam.position.x = 100;
-        gamecam.position.y = 400 ;
+		gamecam.position.x = 1574;
+        gamecam.position.y = 1248 ;
         world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
 		
@@ -73,11 +88,9 @@ public class Playscreen implements Screen {
 		//gamecam.position.set(gamePort.getWorldWidth() / 2 ,gamePort.getWorldHeight() / 2, 0);\
 		gamecam.position.set(0, 0, 0);
 		
+		batch = new SpriteBatch() ;
+		enem = new Enemy(world) ;
 		}
-		
-		
-		
-	
 
 	 
 	@Override
@@ -95,6 +108,9 @@ public class Playscreen implements Screen {
 			          gamecam.position.y += 1000 * dt ;
 			 }else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			          gamecam.position.y -= 1000 * dt ;}
+		     System.out.println(gamecam.position.x) ;
+		     System.out.println(gamecam.position.y) ;
+
 	}
 	
 	public void update(float dt) {
@@ -111,6 +127,12 @@ public class Playscreen implements Screen {
 		renderer.render();
 		b2dr.render(world, gamecam.combined );
 		game.batch.setProjectionMatrix(gamecam.combined);
+		
+//        batch.setProjectionMatrix(gamecam.combined) ;
+//        batch.begin() ;
+//        enem.draw(batch);
+//        batch.end() ;
+
 		
 		// TODO Auto-generated method stub
 		
