@@ -1,5 +1,6 @@
 package Screens;
 
+import alive.Spyder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -36,6 +38,8 @@ import alive.EnemyManager;
 public class Playscreen implements Screen {
 	private Dungeon game;
 	Texture texture;
+	private TextureAtlas atlas;
+
 	private OrthographicCamera gamecam;
 //	private Viewport gamePort;
 	
@@ -55,13 +59,17 @@ public class Playscreen implements Screen {
 	private SpriteBatch batch;
 	private Enemy enem;
 	private EnemyManager enMan;
+
+	private Spyder player;
 	
 	
 
 	public Playscreen(Dungeon game) {
+		atlas = new TextureAtlas("Spyder.txt");
+
 		this.game = game ;
 //		gamecam = new OrthographicCamera(300, 300);
-		gamecam = new OrthographicCamera(3000, 3000);
+		gamecam = new OrthographicCamera(1000, 1000);
 
 		//gamePort = new FitViewport(800, 400, gamecam);
 //		maploader = new TmxMapLoader();
@@ -89,6 +97,8 @@ public class Playscreen implements Screen {
 		b2dr = new Box2DDebugRenderer();
 		
 		new B2WorldCreator(world , map);
+
+		player = new Spyder(world, this);
 		
 		//gamecam.position.set(gamePort.getWorldWidth() / 2 ,gamePort.getWorldHeight() / 2, 0);\
 		gamecam.position.set(3412, 5798, 0);
@@ -101,6 +111,10 @@ public class Playscreen implements Screen {
 		
 	}
 
+	public TextureAtlas getAtlas(){
+		return atlas;
+	}
+
 	 
 	@Override
 	public void show() {
@@ -109,15 +123,53 @@ public class Playscreen implements Screen {
 	}
 	
 	public void handleInput(float dt) {
-			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-			     gamecam.position.x += 1000 * dt ; 
-			 }else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-			     gamecam.position.x -= 1000 * dt ;
-			 }else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			          gamecam.position.y += 1000 * dt ;
-			 }else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-			          gamecam.position.y -= 1000 * dt ;
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+				//player.b2body.applyLinearImpulse(new Vector2(100000f, 0),player.b2body.getWorldCenter(), true);
+			     //gamecam.position.x += 1000 * dt ;
+				player.b2body.setLinearVelocity(500000f,0);
+				System.out.println("FAST");
 			 }
+		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			player.b2body.setLinearVelocity(75f,0);
+			//gamecam.position.x += 1000 * dt ;
+			System.out.println("SLOW");
+		}
+			else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+				//player.b2body.applyLinearImpulse(new Vector2(-100000f, 0),player.b2body.getWorldCenter(), true);
+			     //gamecam.position.x -= 1000 * dt ;
+				player.b2body.setLinearVelocity(-500000f,0);
+			System.out.println("FAST");
+			 }
+		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			player.b2body.setLinearVelocity(-75f,0);
+			//gamecam.position.x -= 1000 * dt ;
+			System.out.println("SLOW");
+		}
+			else if(Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+				//player.b2body.applyLinearImpulse(new Vector2(0, 100000f),player.b2body.getWorldCenter(), true);
+			          //gamecam.position.y += 1000 * dt ;
+				player.b2body.setLinearVelocity(0,500000f);
+			System.out.println("FAST");
+			 }
+		else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.b2body.setLinearVelocity(0,75f);
+			//gamecam.position.y += 1000 * dt ;
+			System.out.println("SLOW");
+		}
+			else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+				//player.b2body.applyLinearImpulse(new Vector2(0, -100000f),player.b2body.getWorldCenter(), true);
+			          //gamecam.position.y -= 1000 * dt ;
+				player.b2body.setLinearVelocity(0,-500000f);
+			System.out.println("FAST");
+			 }
+		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+			player.b2body.setLinearVelocity(0,-75f);
+			//gamecam.position.y -= 1000 * dt ;
+			System.out.println("SLOW");
+		}
+			else{
+				player.b2body.setLinearVelocity(0,0);
+			}
 			
 //		     System.out.print("x is " + gamecam.position.x + ",") ;
 //		     System.out.println("y is " + gamecam.position.y) ;
@@ -126,6 +178,14 @@ public class Playscreen implements Screen {
 	
 	public void update(float dt) {
 		handleInput(dt);
+
+		world.step(1/60f, 6, 2);
+
+		player.update(dt);
+
+		gamecam.position.x = player.b2body.getPosition().x;
+		gamecam.position.y = player.b2body.getPosition().y;
+
 		gamecam.update();
 		renderer.setView(gamecam);
 	}
@@ -139,6 +199,9 @@ public class Playscreen implements Screen {
 		renderer.render();
 		b2dr.render(world, gamecam.combined );
 		game.batch.setProjectionMatrix(gamecam.combined);
+		game.batch.begin();
+		player.draw(game.batch);
+		game.batch.end();
 		
         batch.setProjectionMatrix(gamecam.combined) ;
         
@@ -147,6 +210,7 @@ public class Playscreen implements Screen {
         batch.begin() ;
 //        enem.draw(batch);
         enMan.drawEnemy(batch) ;
+
         batch.end() ;
 	}
 
