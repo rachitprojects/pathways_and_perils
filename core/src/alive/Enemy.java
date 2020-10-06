@@ -46,7 +46,7 @@ public class Enemy extends Sprite {
 
 	public void moveBody() {
 		if(enemBody.getLinearVelocity().x ==  0 && enemBody.getLinearVelocity().y ==  0) {
-		System.out.println("here");
+		//System.out.println("here");
 			switch(init_dir) {
 				case UP:
 					enemBody.setLinearVelocity(0f, 400f);

@@ -1,0 +1,117 @@
+Spyder.png
+size: 1925, 4400
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Down
+  rotate: false
+  xy: 0, 0
+  size: 1375, 275
+  orig: 1375, 275
+  offset: 0, 0
+  index: -1
+Down_Attack
+  rotate: false
+  xy: 0, 275
+  size: 1650, 275
+  orig: 1650, 275
+  offset: 0, 0
+  index: -1
+Down_Dead
+  rotate: false
+  xy: 0, 550
+  size: 1925, 275
+  orig: 1925, 275
+  offset: 0, 0
+  index: -1
+Down_Fast
+  rotate: false
+  xy: 0, 825
+  size: 1100, 275
+  orig: 1100, 275
+  offset: 0, 0
+  index: -1
+Left
+  rotate: false
+  xy: 0, 1100
+  size: 1375, 275
+  orig: 1375, 275
+  offset: 0, 0
+  index: -1
+Left_Attack
+  rotate: false
+  xy: 0, 1375
+  size: 1650, 275
+  orig: 1650, 275
+  offset: 0, 0
+  index: -1
+Left_Dead
+  rotate: false
+  xy: 0, 1650
+  size: 1925, 275
+  orig: 1925, 275
+  offset: 0, 0
+  index: -1
+Left_Fast
+  rotate: false
+  xy: 0, 1925
+  size: 1100, 275
+  orig: 1100, 275
+  offset: 0, 0
+  index: -1
+Right
+  rotate: false
+  xy: 0, 2200
+  size: 1375, 275
+  orig: 1375, 275
+  offset: 0, 0
+  index: -1
+Right_Attack
+  rotate: false
+  xy: 0, 2475
+  size: 1650, 275
+  orig: 1650, 275
+  offset: 0, 0
+  index: -1
+Right_Dead
+  rotate: false
+  xy: 0, 2750
+  size: 1925, 275
+  orig: 1925, 275
+  offset: 0, 0
+  index: -1
+Right_Fast
+  rotate: false
+  xy: 0, 3025
+  size: 1100, 275
+  orig: 1100, 275
+  offset: 0, 0
+  index: -1
+Up
+  rotate: false
+  xy: 0, 3300
+  size: 1375, 275
+  orig: 1375, 275
+  offset: 0, 0
+  index: -1
+Up_Attack
+  rotate: false
+  xy: 0, 3575
+  size: 1650, 275
+  orig: 1650, 275
+  offset: 0, 0
+  index: -1
+Up_Dead
+  rotate: false
+  xy: 0, 3850
+  size: 1925, 275
+  orig: 1925, 275
+  offset: 0, 0
+  index: -1
+Up_Fast
+  rotate: false
+  xy: 0, 4125
+  size: 1100, 275
+  orig: 1100, 275
+  offset: 0, 0
+  index: -1
