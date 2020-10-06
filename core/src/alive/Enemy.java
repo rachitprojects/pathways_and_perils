@@ -16,12 +16,12 @@ public class Enemy extends Sprite {
 	
 	private World world ;
 	private Body enemBody;
-	private INIT init_dir ; 
+	private INIT curr_dir ; 
 	public Enemy(World world, float x, float y, INIT dir) {
 		
 		super(new Texture("Dungeon Crawl Stone Soup Supplemental/Dungeon Crawl Stone Soup Supplemental/monster/demons/blue_devil.png")) ;
 		this.world = world ; 
-		this.init_dir = dir;
+		this.curr_dir = dir;
 		defineBody(x, y) ;
 		setBounds(0, 0, 32, 32) ;
 		setPosition(enemBody.getPosition().x - getWidth() / 2, enemBody.getPosition().y - getHeight() /  2 ) ;
@@ -30,7 +30,6 @@ public class Enemy extends Sprite {
 	
 
 	public void defineBody(float x, float y) {
-		System.out.println("here in define");
 		BodyDef bdef = new BodyDef() ; 
 		CircleShape cshape = new CircleShape() ;
 		FixtureDef enemfix = new FixtureDef() ; 
@@ -40,14 +39,17 @@ public class Enemy extends Sprite {
 		enemBody = this.world.createBody(bdef) ; 
 		
 		enemfix.shape = cshape ; 
-		enemBody.createFixture(enemfix) ;
-		
+		enemBody.createFixture(enemfix).setUserData(this); ;
 	}
 
 	public void moveBody() {
 		if(enemBody.getLinearVelocity().x ==  0 && enemBody.getLinearVelocity().y ==  0) {
+<<<<<<< HEAD
 		//System.out.println("here");
 			switch(init_dir) {
+=======
+			switch(curr_dir) {
+>>>>>>> baf595f... Enemy colliding with walls
 				case UP:
 					enemBody.setLinearVelocity(0f, 400f);
 				break;
@@ -71,6 +73,24 @@ public class Enemy extends Sprite {
 //		enemBody.setLinearVelocity(0f, 400f);
 		
 		setPosition(enemBody.getPosition().x - getWidth() / 2, enemBody.getPosition().y - getHeight() /  2 ) ;
+	}
+
+
+	public void invert_dir() {
+		switch(curr_dir) { 
+			case UP:
+				curr_dir = INIT.DOWN ; 
+			break ; 
+			case DOWN:
+				curr_dir = INIT.UP  ; 
+			break ;
+			case LEFT:
+				curr_dir = INIT.RIGHT ;
+			break ; 
+			case RIGHT:
+				curr_dir = INIT.LEFT ;
+			break ;
+		}
 	}
 	
 }

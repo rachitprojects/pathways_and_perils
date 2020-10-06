@@ -69,7 +69,11 @@ public class Playscreen implements Screen {
 
 		this.game = game ;
 //		gamecam = new OrthographicCamera(300, 300);
+<<<<<<< HEAD
 		gamecam = new OrthographicCamera(1000, 1000);
+=======
+		gamecam = new OrthographicCamera(300, 300);
+>>>>>>> baf595f... Enemy colliding with walls
 
 		//gamePort = new FitViewport(800, 400, gamecam);
 //		maploader = new TmxMapLoader();
@@ -101,13 +105,14 @@ public class Playscreen implements Screen {
 		player = new Spyder(world, this);
 		
 		//gamecam.position.set(gamePort.getWorldWidth() / 2 ,gamePort.getWorldHeight() / 2, 0);\
-		gamecam.position.set(3412, 5798, 0);
+		gamecam.position.set(448, 3670, 0);
 		
 		batch = new SpriteBatch() ;
 //		enem = new Enemy(world, 448f, 3670f, 1) ;
 		enMan = new EnemyManager() ; 
 		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
+		world.setContactListener(new WorldContactListener());
 		
 	}
 
