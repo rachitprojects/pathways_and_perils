@@ -44,12 +44,12 @@ public class Enemy extends Sprite {
 
 	public void moveBody() {
 		if(enemBody.getLinearVelocity().x ==  0 && enemBody.getLinearVelocity().y ==  0) {
-<<<<<<< HEAD
+
 		//System.out.println("here");
 			switch(init_dir) {
-=======
+
 			switch(curr_dir) {
->>>>>>> baf595f... Enemy colliding with walls
+
 				case UP:
 					enemBody.setLinearVelocity(0f, 400f);
 				break;
