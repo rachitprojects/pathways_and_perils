@@ -25,6 +25,8 @@ public class Spyder extends Sprite {
     private Animation<TextureRegion> spyderLEFT_FAST;
     private Animation<TextureRegion> spyderRIGHT_FAST;
     private float stateTimer;
+    
+    public String name = "main_character" ;
 
     public Spyder(World world, Playscreen screen){
         super(screen.getAtlas().findRegion("Down"));
@@ -136,19 +138,19 @@ public class Spyder extends Sprite {
     }
 
     public State getState(){
-       if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+       if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT))
            return State.RIGHT_FAST;
        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
            return State.RIGHT;
-       else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+       else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT))
            return State.LEFT_FAST;
        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
            return State.LEFT;
-       else if(Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+       else if(Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT))
            return State.UP_FAST;
        else if(Gdx.input.isKeyPressed(Input.Keys.UP))
            return State.UP;
-       else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+       else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT))
            return State.DOWN_FAST;
        else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
            return State.DOWN;
@@ -167,6 +169,6 @@ public class Spyder extends Sprite {
         shape.setRadius(25);
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData("main_character");
     }
 }

@@ -17,18 +17,20 @@ public class Enemy extends Sprite {
 	private World world ;
 	private Body enemBody;
 	private INIT curr_dir ; 
+	public String name = "enemy"  ;
+	
 	public Enemy(World world, float x, float y, INIT dir) {
 		
 		super(new Texture("Dungeon Crawl Stone Soup Supplemental/Dungeon Crawl Stone Soup Supplemental/monster/demons/blue_devil.png")) ;
 		this.world = world ; 
 		this.curr_dir = dir;
+		
 		defineBody(x, y) ;
 		setBounds(0, 0, 32, 32) ;
 		setPosition(enemBody.getPosition().x - getWidth() / 2, enemBody.getPosition().y - getHeight() /  2 ) ;
 
 	}
 	
-
 	public void defineBody(float x, float y) {
 		BodyDef bdef = new BodyDef() ; 
 		CircleShape cshape = new CircleShape() ;
@@ -38,15 +40,28 @@ public class Enemy extends Sprite {
 		bdef.position.set(x, y) ; 
 		enemBody = this.world.createBody(bdef) ; 
 		
+		cshape.setRadius(30.0f);
 		enemfix.shape = cshape ; 
-		enemBody.createFixture(enemfix).setUserData(this); ;
+		enemfix.restitution = 2.0f ;
+		
+		Enemy inner_circ = this ;
+		inner_circ.name = "inner_circ" ;
+		enemBody.createFixture(enemfix).setUserData(inner_circ); ;
+		
+		CircleShape pDetecShape = new CircleShape() ;
+		pDetecShape.setRadius(100.0f);
+		enemfix.shape = pDetecShape ;
+		enemfix.isSensor = true ;
+
+		
+		enemBody.createFixture(enemfix).setUserData(this); 
+		
 	}
 
 	public void moveBody() {
 		if(enemBody.getLinearVelocity().x ==  0 && enemBody.getLinearVelocity().y ==  0) {
 
 		//System.out.println("here");
-			switch(init_dir) {
 
 			switch(curr_dir) {
 
@@ -91,6 +106,13 @@ public class Enemy extends Sprite {
 				curr_dir = INIT.LEFT ;
 			break ;
 		}
+	}
+	
+	public Vector2 calcPath(Vector2 playerPosition) {
+		Vector2 enemPosition = this.enemBody.getPosition() ;
+		Vector2 enemVelocity = playerPosition.add(enemPosition.scl(-1)) ;
+		this.enemBody.setLinearVelocity(enemVelocity);
+		return enemVelocity ;
 	}
 	
 }
