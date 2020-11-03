@@ -27,6 +27,7 @@ public class Spyder extends Sprite {
     private float stateTimer;
     
     public String name = "main_character" ;
+    public final static byte spy_byte = 8 ;
 
     public Spyder(World world, Playscreen screen){
         super(screen.getAtlas().findRegion("Down"));
@@ -169,6 +170,8 @@ public class Spyder extends Sprite {
         shape.setRadius(25);
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = spy_byte ; 
+        
         b2body.createFixture(fdef).setUserData("main_character");
     }
 }

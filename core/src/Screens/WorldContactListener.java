@@ -23,24 +23,38 @@ public class WorldContactListener implements ContactListener {
 		Fixture body1 = contact.getFixtureA() ;
 		Fixture body2 = contact.getFixtureB() ;
 		
-		if(body1.getUserData() == "main_character" || body2.getUserData() == "main_character") {
-			Fixture main_char = body1.getUserData() == "main_character" ? body1 : body2 ;
-			Fixture object = main_char == body1 ? body2 : body1 ;
-			
-			if(object.getUserData() != null && Enemy.class.isAssignableFrom(object.getUserData().getClass())) {
+		
+		int cdef = body1.getFilterData().categoryBits | body2.getFilterData().categoryBits ;
+		
+		switch(cdef) {
+		
+			case Spyder.spy_byte | Enemy.inner_byte:
+				Fixture main_char = body1.getUserData() == "main_character" ? body1 : body2 ;
+				Fixture object = main_char == body1 ? body2 : body1 ;
+				
 				Enemy currentEnem = (Enemy) object.getUserData() ;
 				Vector2 playerpos = (player.b2body.getPosition()) ;
 				
 				Vector2 dist = currentEnem.calcPath(playerpos); 
-				
-				if(currentEnem.name == "inner_circ") {
-					Hud.decreaseHealth(1);
-				}
-				
-			}
+				Hud.decreaseHealth(1);
+			break ;
 			
-			
+			case Spyder.spy_byte | Enemy.outer_byte:
+				Fixture main_char1 = body1.getUserData() == "main_character" ? body1 : body2 ;
+				Fixture object1 = main_char1 == body1 ? body2 : body1 ;
+				
+				Enemy currentEnem1 = (Enemy) object1.getUserData() ;
+				Vector2 playerpos1 = (player.b2body.getPosition()) ;
+				
+				Vector2 dist1 = currentEnem1.calcPath(playerpos1); 
+			break ;
+
+				
+				
+		
 		}
+		
+		
 	}
 
 	@Override
@@ -48,18 +62,36 @@ public class WorldContactListener implements ContactListener {
 
 		Fixture body1 = contact.getFixtureA() ;
 		Fixture body2 = contact.getFixtureB() ;
+
 		
-		if(body1.getUserData() == "main_character" || body2.getUserData() == "main_character") {
-			Fixture main_char = body1.getUserData() == "main_character" ? body1 : body2 ;
-			Fixture object = main_char == body1 ? body2 : body1 ;
-			
-			if(object.getUserData() != null && Enemy.class.isAssignableFrom(object.getUserData().getClass())) {
+		int cdef = body1.getFilterData().categoryBits | body2.getFilterData().categoryBits ;
+		
+		switch(cdef) {
+		
+			case Spyder.spy_byte | Enemy.inner_byte:
+				Fixture main_char = body1.getUserData() == "main_character" ? body1 : body2 ;
+				Fixture object = main_char == body1 ? body2 : body1 ;
+				
 				Enemy currentEnem = (Enemy) object.getUserData() ;
 				Vector2 playerpos = (player.b2body.getPosition()) ;
 				
 				Vector2 dist = currentEnem.calcPath(playerpos); 
+				Hud.decreaseHealth(1);
+			break ;
+			
+			case Spyder.spy_byte | Enemy.outer_byte:
+				Fixture main_char1 = body1.getUserData() == "main_character" ? body1 : body2 ;
+				Fixture object1 = main_char1 == body1 ? body2 : body1 ;
 				
-			}
+				Enemy currentEnem1 = (Enemy) object1.getUserData() ;
+				Vector2 playerpos1 = (player.b2body.getPosition()) ;
+				
+				Vector2 dist1 = currentEnem1.calcPath(playerpos1); 
+			break ;
+
+				
+				
+		
 		}
 
 	

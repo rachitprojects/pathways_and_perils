@@ -12,12 +12,15 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Enemy extends Sprite {
 
-	public enum INIT { UP, DOWN, LEFT, RIGHT} ;
+	public enum INIT { UP, DOWN, LEFT, RIGHT}
+
 	
 	private World world ;
 	private Body enemBody;
 	private INIT curr_dir ; 
 	public String name = "enemy"  ;
+	public final static byte inner_byte = 2 ;
+	public final static byte outer_byte = 4 ;
 	
 	public Enemy(World world, float x, float y, INIT dir) {
 		
@@ -43,16 +46,14 @@ public class Enemy extends Sprite {
 		cshape.setRadius(30.0f);
 		enemfix.shape = cshape ; 
 		enemfix.restitution = 2.0f ;
-		
-		Enemy inner_circ = this ;
-		inner_circ.name = "inner_circ" ;
-		enemBody.createFixture(enemfix).setUserData(inner_circ); ;
+		enemfix.filter.categoryBits = inner_byte ;
+		enemBody.createFixture(enemfix).setUserData(this); 
 		
 		CircleShape pDetecShape = new CircleShape() ;
 		pDetecShape.setRadius(100.0f);
 		enemfix.shape = pDetecShape ;
 		enemfix.isSensor = true ;
-
+		enemfix.filter.categoryBits = outer_byte ;
 		
 		enemBody.createFixture(enemfix).setUserData(this); 
 		
