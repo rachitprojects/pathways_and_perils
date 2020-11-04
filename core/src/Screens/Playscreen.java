@@ -61,6 +61,7 @@ public class Playscreen implements Screen {
 	private EnemyManager enMan;
 
 	private Spyder player;
+	private Hud hud;
 	
 	
 
@@ -69,7 +70,10 @@ public class Playscreen implements Screen {
 
 		this.game = game ;
 //		gamecam = new OrthographicCamera(300, 300);
-		gamecam = new OrthographicCamera(1000, 1000);
+
+		gamecam = new OrthographicCamera(300, 300);
+
+
 
 		//gamePort = new FitViewport(800, 400, gamecam);
 //		maploader = new TmxMapLoader();
@@ -101,13 +105,18 @@ public class Playscreen implements Screen {
 		player = new Spyder(world, this);
 		
 		//gamecam.position.set(gamePort.getWorldWidth() / 2 ,gamePort.getWorldHeight() / 2, 0);\
-		gamecam.position.set(3412, 5798, 0);
+		gamecam.position.set(448, 3670, 0);
 		
 		batch = new SpriteBatch() ;
 //		enem = new Enemy(world, 448f, 3670f, 1) ;
 		enMan = new EnemyManager() ; 
 		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
+		enMan.createEnemy(world, 1200, 1000 , Enemy.INIT.LEFT) ;
+		
+		hud = new Hud(game.batch) ;
+		
+		world.setContactListener(new WorldContactListener(player));
 		
 	}
 
@@ -127,45 +136,45 @@ public class Playscreen implements Screen {
 				//player.b2body.applyLinearImpulse(new Vector2(100000f, 0),player.b2body.getWorldCenter(), true);
 			     //gamecam.position.x += 1000 * dt ;
 				player.b2body.setLinearVelocity(500000f,0);
-				System.out.println("FAST");
+//				System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 			player.b2body.setLinearVelocity(75f,0);
 			//gamecam.position.x += 1000 * dt ;
-			System.out.println("SLOW");
+//			System.out.println("SLOW");
 		}
 			else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
 				//player.b2body.applyLinearImpulse(new Vector2(-100000f, 0),player.b2body.getWorldCenter(), true);
 			     //gamecam.position.x -= 1000 * dt ;
 				player.b2body.setLinearVelocity(-500000f,0);
-			System.out.println("FAST");
+//			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			player.b2body.setLinearVelocity(-75f,0);
 			//gamecam.position.x -= 1000 * dt ;
-			System.out.println("SLOW");
+//			System.out.println("SLOW");
 		}
 			else if(Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
 				//player.b2body.applyLinearImpulse(new Vector2(0, 100000f),player.b2body.getWorldCenter(), true);
 			          //gamecam.position.y += 1000 * dt ;
 				player.b2body.setLinearVelocity(0,500000f);
-			System.out.println("FAST");
+//			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			player.b2body.setLinearVelocity(0,75f);
 			//gamecam.position.y += 1000 * dt ;
-			System.out.println("SLOW");
+//			System.out.println("SLOW");
 		}
 			else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)&& Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
 				//player.b2body.applyLinearImpulse(new Vector2(0, -100000f),player.b2body.getWorldCenter(), true);
 			          //gamecam.position.y -= 1000 * dt ;
 				player.b2body.setLinearVelocity(0,-500000f);
-			System.out.println("FAST");
+//			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			player.b2body.setLinearVelocity(0,-75f);
 			//gamecam.position.y -= 1000 * dt ;
-			System.out.println("SLOW");
+//			System.out.println("SLOW");
 		}
 			else{
 				player.b2body.setLinearVelocity(0,0);
@@ -181,8 +190,9 @@ public class Playscreen implements Screen {
 
 		world.step(1/60f, 6, 2);
 
-		player.update(dt);
-
+		player.update(dt) ;
+		hud.update(dt) ;
+		
 		gamecam.position.x = player.b2body.getPosition().x;
 		gamecam.position.y = player.b2body.getPosition().y;
 
@@ -198,16 +208,24 @@ public class Playscreen implements Screen {
         world.step(1/60f, 6, 2) ;
 		renderer.render();
 		b2dr.render(world, gamecam.combined );
-		game.batch.setProjectionMatrix(gamecam.combined);
-		game.batch.begin();
-		player.draw(game.batch);
-		game.batch.end();
+//		game.batch.setProjectionMatrix(gamecam.combined);
+//		game.batch.begin();
+//		player.draw(game.batch);
+//		game.batch.end();
+
+		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+		hud.stage.draw();
 		
         batch.setProjectionMatrix(gamecam.combined) ;
-        
         enMan.updateEnemy(delta);
+		batch.begin();
+		player.draw(batch);
+//		batch.end();
+
+        
+//        enMan.updateEnemy(delta);
 //        Currently drawing every enemy, however in the future optimize this to only draw enemies which are not in the screen
-        batch.begin() ;
+//        batch.begin() ;
 //        enem.draw(batch);
         enMan.drawEnemy(batch) ;
 

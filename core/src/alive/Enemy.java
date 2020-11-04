@@ -12,25 +12,29 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Enemy extends Sprite {
 
-	public enum INIT { UP, DOWN, LEFT, RIGHT} ;
+	public enum INIT { UP, DOWN, LEFT, RIGHT}
+
 	
 	private World world ;
 	private Body enemBody;
-	private INIT init_dir ; 
+	private INIT curr_dir ; 
+	public String name = "enemy"  ;
+	public final static byte inner_byte = 2 ;
+	public final static byte outer_byte = 4 ;
+	
 	public Enemy(World world, float x, float y, INIT dir) {
 		
 		super(new Texture("Dungeon Crawl Stone Soup Supplemental/Dungeon Crawl Stone Soup Supplemental/monster/demons/blue_devil.png")) ;
 		this.world = world ; 
-		this.init_dir = dir;
+		this.curr_dir = dir;
+		
 		defineBody(x, y) ;
 		setBounds(0, 0, 32, 32) ;
 		setPosition(enemBody.getPosition().x - getWidth() / 2, enemBody.getPosition().y - getHeight() /  2 ) ;
 
 	}
 	
-
 	public void defineBody(float x, float y) {
-		System.out.println("here in define");
 		BodyDef bdef = new BodyDef() ; 
 		CircleShape cshape = new CircleShape() ;
 		FixtureDef enemfix = new FixtureDef() ; 
@@ -39,15 +43,29 @@ public class Enemy extends Sprite {
 		bdef.position.set(x, y) ; 
 		enemBody = this.world.createBody(bdef) ; 
 		
+		cshape.setRadius(30.0f);
 		enemfix.shape = cshape ; 
-		enemBody.createFixture(enemfix) ;
+		enemfix.restitution = 2.0f ;
+		enemfix.filter.categoryBits = inner_byte ;
+		enemBody.createFixture(enemfix).setUserData(this); 
+		
+		CircleShape pDetecShape = new CircleShape() ;
+		pDetecShape.setRadius(100.0f);
+		enemfix.shape = pDetecShape ;
+		enemfix.isSensor = true ;
+		enemfix.filter.categoryBits = outer_byte ;
+		
+		enemBody.createFixture(enemfix).setUserData(this); 
 		
 	}
 
 	public void moveBody() {
 		if(enemBody.getLinearVelocity().x ==  0 && enemBody.getLinearVelocity().y ==  0) {
+
 		//System.out.println("here");
-			switch(init_dir) {
+
+			switch(curr_dir) {
+
 				case UP:
 					enemBody.setLinearVelocity(0f, 400f);
 				break;
@@ -71,6 +89,31 @@ public class Enemy extends Sprite {
 //		enemBody.setLinearVelocity(0f, 400f);
 		
 		setPosition(enemBody.getPosition().x - getWidth() / 2, enemBody.getPosition().y - getHeight() /  2 ) ;
+	}
+
+
+	public void invert_dir() {
+		switch(curr_dir) { 
+			case UP:
+				curr_dir = INIT.DOWN ; 
+			break ; 
+			case DOWN:
+				curr_dir = INIT.UP  ; 
+			break ;
+			case LEFT:
+				curr_dir = INIT.RIGHT ;
+			break ; 
+			case RIGHT:
+				curr_dir = INIT.LEFT ;
+			break ;
+		}
+	}
+	
+	public Vector2 calcPath(Vector2 playerPosition) {
+		Vector2 enemPosition = this.enemBody.getPosition() ;
+		Vector2 enemVelocity = playerPosition.add(enemPosition.scl(-1)) ;
+		this.enemBody.setLinearVelocity(enemVelocity);
+		return enemVelocity ;
 	}
 	
 }
