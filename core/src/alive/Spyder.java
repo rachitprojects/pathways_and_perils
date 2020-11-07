@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.kingsman.dungeon.Dungeon;
 
 public class Spyder extends Sprite {
     public enum State {UP, DOWN, LEFT, RIGHT, STANDING, UP_FAST, DOWN_FAST, LEFT_FAST, RIGHT_FAST};
@@ -86,6 +87,7 @@ public class Spyder extends Sprite {
 
     public void update(float dt){
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+        //System.out.println(" " + b2body.getPosition().x + " " + b2body.getPosition().y);
         setRegion(getFrame(dt));
     }
 

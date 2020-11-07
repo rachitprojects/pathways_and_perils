@@ -12,6 +12,7 @@ import Screens.Playscreen;
 
 public class Dungeon extends Game {
 	public SpriteBatch batch;
+	public static boolean Win = false;
 	
 	@Override
 	public void create () {
