@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.kingsman.dungeon.Dungeon;
 
 public class Hud {
 
@@ -63,6 +64,9 @@ public class Hud {
 	
 	public static void decreaseHealth(int val) {
 		health -= val ;
+		if(health<0){
+			Dungeon.Dead=true;
+		}
 		healthLabel.setText(String.format("%03d", health));
 	}
 }

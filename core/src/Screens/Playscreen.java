@@ -241,6 +241,11 @@ public class Playscreen implements Screen {
         	music.stop();
         	dispose();
 		}
+		if(Dungeon.Dead){
+			game.setScreen(new DeadScreen(game));
+			music.stop();
+			dispose();
+		}
 	}
 
 	@Override
