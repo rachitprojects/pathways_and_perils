@@ -1,5 +1,7 @@
 package com.kingsman.dungeon;
 
+import Screens.StartScreen;
+import Screens.WinScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -12,11 +14,14 @@ import Screens.Playscreen;
 
 public class Dungeon extends Game {
 	public SpriteBatch batch;
+	public static boolean Win = false;
+	public static boolean Dead = false;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new Playscreen(this));
+		setScreen(new StartScreen(this));
+		//setScreen(new Playscreen(this));
 	}
 
 	@Override

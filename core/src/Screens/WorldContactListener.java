@@ -1,5 +1,6 @@
 package Screens;
 
+import alive.Treasure;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import alive.Enemy;
 import alive.Spyder;
+import com.kingsman.dungeon.Dungeon;
 
 public class WorldContactListener implements ContactListener {
 
@@ -49,8 +51,10 @@ public class WorldContactListener implements ContactListener {
 				Vector2 dist1 = currentEnem1.calcPath(playerpos1); 
 			break ;
 
-				
-				
+			case Spyder.spy_byte | Treasure.treasure_byte:
+				System.out.println("Hit Treasure");
+				Dungeon.Win = true;
+				break;
 		
 		}
 		
