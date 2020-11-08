@@ -62,7 +62,7 @@ public class Playscreen implements Screen {
 		this.game = game ;
 //		gamecam = new OrthographicCamera(300, 300);
 
-		gamecam = new OrthographicCamera(600, 600);
+		gamecam = new OrthographicCamera(5000, 5000);
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true);
 		music.setVolume(1.2f);
@@ -106,10 +106,22 @@ public class Playscreen implements Screen {
 		batch = new SpriteBatch() ;
 //		enem = new Enemy(world, 448f, 3670f, 1) ;
 		enMan = new EnemyManager() ; 
-		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
-		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
-		enMan.createEnemy(world, 1200, 1000 , Enemy.INIT.LEFT) ;
-		
+//		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
+//		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
+//		enMan.createEnemy(world, 1200, 1000 , Enemy.INIT.LEFT) ;
+		enMan.createEnemy(world, 1602, 1031, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 3076, 1284, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 3318, 1517, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 2927, 1872, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1931, 2410, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1931, 2410, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1931, 2410, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1464, 2112, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1017, 2790, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1826, 2800, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1370, 2916, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1470, 4662, Enemy.INIT.RIGHT) ;
+
 		hud = new Hud(game.batch) ;
 		
 		world.setContactListener(new WorldContactListener(player));
@@ -144,7 +156,7 @@ public class Playscreen implements Screen {
 //				System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-			player.b2body.setLinearVelocity(75f,0);
+			player.b2body.setLinearVelocity(7500000f,0);
 			//gamecam.position.x += 1000 * dt ;
 //			System.out.println("SLOW");
 		}
@@ -155,7 +167,7 @@ public class Playscreen implements Screen {
 //			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-			player.b2body.setLinearVelocity(-75f,0);
+			player.b2body.setLinearVelocity(-7500000f,0);
 			//gamecam.position.x -= 1000 * dt ;
 //			System.out.println("SLOW");
 		}
@@ -166,7 +178,7 @@ public class Playscreen implements Screen {
 //			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			player.b2body.setLinearVelocity(0,75f);
+			player.b2body.setLinearVelocity(0,7500000f);
 			//gamecam.position.y += 1000 * dt ;
 //			System.out.println("SLOW");
 		}
@@ -177,9 +189,12 @@ public class Playscreen implements Screen {
 //			System.out.println("FAST");
 			 }
 		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-			player.b2body.setLinearVelocity(0,-75f);
+			player.b2body.setLinearVelocity(0,-7500000f);
 			//gamecam.position.y -= 1000 * dt ;
 //			System.out.println("SLOW");
+		}
+		else if(Gdx.input.) {
+			System.out.println(player.b2body.getPosition()) ;
 		}
 			else{
 				player.b2body.setLinearVelocity(0,0);

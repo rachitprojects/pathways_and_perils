@@ -38,7 +38,7 @@ public class WorldContactListener implements ContactListener {
 				Vector2 playerpos = (player.b2body.getPosition()) ;
 				
 				Vector2 dist = currentEnem.calcPath(playerpos); 
-				Hud.decreaseHealth(1);
+				Hud.decreaseHealth(10);
 			break ;
 			
 			case Spyder.spy_byte | Enemy.outer_byte:
@@ -80,7 +80,6 @@ public class WorldContactListener implements ContactListener {
 				Vector2 playerpos = (player.b2body.getPosition()) ;
 				
 				Vector2 dist = currentEnem.calcPath(playerpos); 
-				Hud.decreaseHealth(1);
 			break ;
 			
 			case Spyder.spy_byte | Enemy.outer_byte:

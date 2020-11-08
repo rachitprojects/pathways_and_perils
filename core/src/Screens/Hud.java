@@ -60,6 +60,11 @@ public class Hud {
 			countdownLabel.setText(String.format("%03d", worldTimer));
 			timeCount = 0 ;
 		}
+		
+		if(worldTimer <= 0) {
+			Dungeon.Dead = true ;
+		}
+		
 	}
 	
 	public static void decreaseHealth(int val) {
