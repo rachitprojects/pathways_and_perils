@@ -109,7 +109,26 @@ public class Playscreen implements Screen {
 //		enMan.createEnemy(world, 448, 3670, Enemy.INIT.RIGHT) ;
 //		enMan.createEnemy(world, 3412, 5798, Enemy.INIT.LEFT) ;
 //		enMan.createEnemy(world, 1200, 1000 , Enemy.INIT.LEFT) ;
-		enMan.createEnemy(world, 1602, 1031, Enemy.INIT.RIGHT) ;
+
+		
+		hud = new Hud(game.batch) ;
+		
+		world.setContactListener(new WorldContactListener(player));
+		createEnemies() ;
+		
+	}
+
+//	public void songFile(){
+//		managersong = new AssetManager();
+//		manager.load(Gdx.files.internal("music.mp3").path(), Music.class);
+//		manager.finishLoading();
+//		music = manager.get(Gdx.files.internal("music.mp3").path(), Music.class);
+//		music.setLooping(true);
+//		music.play();
+//	}
+	
+	public void createEnemies() {
+//		enMan.createEnemy(world, 1602, 1031, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 3076, 1284, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 3318, 1517, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 2927, 1872, Enemy.INIT.RIGHT) ;
@@ -122,21 +141,19 @@ public class Playscreen implements Screen {
 		enMan.createEnemy(world, 1370, 2916, Enemy.INIT.RIGHT) ;
 		enMan.createEnemy(world, 1470, 4662, Enemy.INIT.RIGHT) ;
 
-		hud = new Hud(game.batch) ;
-		
-		world.setContactListener(new WorldContactListener(player));
-		
+		enMan.createEnemy(world, 2713, 2736, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 2533, 3240, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 2533, 3476, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 2113, 3340, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 1765, 4156, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 4001, 5811, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 4205, 5811, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 4205, 6099, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 3685, 6372, Enemy.INIT.RIGHT) ;
+		enMan.createEnemy(world, 3685, 6112, Enemy.INIT.RIGHT) ;
+
 	}
-
-//	public void songFile(){
-//		managersong = new AssetManager();
-//		manager.load(Gdx.files.internal("music.mp3").path(), Music.class);
-//		manager.finishLoading();
-//		music = manager.get(Gdx.files.internal("music.mp3").path(), Music.class);
-//		music.setLooping(true);
-//		music.play();
-//	}
-
+	
 	public TextureAtlas getAtlas(){
 		return atlas;
 	}
@@ -195,7 +212,10 @@ public class Playscreen implements Screen {
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
 			System.out.println(player.b2body.getPosition()) ;
-		}
+		}	else if(Gdx.input.isKeyPressed(Input.Keys.BACKSLASH)){
+			enMan.clearEnemies(); 
+		} 
+
 			else{
 				player.b2body.setLinearVelocity(0,0);
 			}
