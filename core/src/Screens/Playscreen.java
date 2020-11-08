@@ -62,7 +62,7 @@ public class Playscreen implements Screen {
 		this.game = game ;
 //		gamecam = new OrthographicCamera(300, 300);
 
-		gamecam = new OrthographicCamera(5000, 5000);
+		gamecam = new OrthographicCamera(800, 480);
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true);
 		music.setVolume(1.2f);
@@ -193,7 +193,7 @@ public class Playscreen implements Screen {
 			//gamecam.position.y -= 1000 * dt ;
 //			System.out.println("SLOW");
 		}
-		else if(Gdx.input.) {
+		else if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
 			System.out.println(player.b2body.getPosition()) ;
 		}
 			else{
