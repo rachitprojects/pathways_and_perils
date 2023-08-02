@@ -1,14 +1,11 @@
-"Pathways and Perils 
-    --May the Dark be with you" 
+                                    PATHWAYS AND PERILS
+                                          - May the Darkness Be with You
+                                    Kingsmen Reboot
+                                    Rachit Verma
+                                    Bivek Benoy Paul
+                                    Sudharsan
+                                    Rahul Nayak
+                                    Vaishakh Dileep
+                                    Dinesh Kumar
 
-Kingsmen Reboot
-
-Rachit Verma <br />
-Sreevasa Sudarsan <br />
-Bivek Benoy Paul <br />
-Rahul Nayak <br />
-Vaisakh Dileep <br  />
-Dinesh Kumar <br  />
-
-
-
+Status Update : Enemies now capable of moving around. Created methods to add enemies to map. Enemy animations to be placed in the right place. 
